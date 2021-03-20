@@ -53,7 +53,7 @@ ENV FREQUENCY=344975000
 #
 # When running a container this script will be executed
 #
-ENTRYPOINT sh -c "/usr/local/bin/rtl_433 -f $FREQUENCY -F json -U | /usr/bin/mosquitto_pub -h $MQTT_HOST -u $MQTT_USER -P $MQTT_PASS -i RTL_433 -l -t \"$TOPIC\""
+ENTRYPOINT sh -c "/usr/local/bin/rtl_433 -f $FREQUENCY -F json -M utc | /usr/bin/mosquitto_pub -h $MQTT_HOST -u $MQTT_USER -P $MQTT_PASS -i RTL_433 -l -t \"$TOPIC\""
 
 
 #
