@@ -48,17 +48,13 @@ RUN git clone https://github.com/merbanan/rtl_433.git \
 ENV MQTT_HOST=""
 ENV MQTT_USER=""
 ENV MQTT_PASS=""
-
+ENV LANG=C
+ENV FREQUENCY=344975000
 #
 # When running a container this script will be executed
 #
-ENTRYPOINT ["/scripts/rtl2mqtt.sh"]
+ENTRYPOINT sh -c "/usr/local/bin/rtl_433 -f $FREQUENCY -F json -U | /usr/bin/mosquitto_pub -h $MQTT_HOST -u $MQTT_USER -P $MQTT_PASS -i RTL_433 -l -t \"$TOPIC\""
 
-#
-# Copy my script and make it executable
-#
-COPY rtl2mqtt.sh /scripts/rtl2mqtt.sh
-RUN chmod +x /scripts/rtl2mqtt.sh
 
 #
 # The script is in a volume. This makes changes persistent and allows you modify it.
